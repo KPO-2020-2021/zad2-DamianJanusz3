@@ -14,7 +14,7 @@ ${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/LZespolona.o\
 ${OBJ}:
 	mkdir ${OBJ}
 
-${OBJ}/main.o: ${SRC}/main.cpp inc/LZespolona.hh inc/BazaTestu.hh
+${OBJ}/main.o: ${SRC}/main.cpp inc/LZespolona.hh inc/BazaTestu.hh 
 	g++ -c ${FLAGS} -o ${OBJ}/main.o ${SRC}/main.cpp
 
 ${OBJ}/LZespolona.o: ${SRC}/LZespolona.cpp inc/LZespolona.hh

@@ -1,13 +1,17 @@
-#ifndef WYRAZENIEZESP_HH
-#define WYRAZENIEZESP_HH
+#ifndef STATYSTYKI_HH
+#define STATYSTYKI_HH
 
 
 
-#include "LZespolona.hh"
-#include "WyrazenieZesp.hh"
+#include<iostream>
+using namespace std;
 
-/*
- * Tu nalezy zdefiniowac funkcje, ktore definiuja model statystyki 
- */
+//struktura do operowania statystykami
+struct staty {
+    int d;         //ilość dobrych odpowiedzi
+    int z;          //ilość złych odpowiedzi
+};
+
+void Podsumowanie (staty score);
 
 #endif
