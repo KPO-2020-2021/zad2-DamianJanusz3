@@ -10,8 +10,10 @@ using namespace std;
 struct staty {
     int d;         //ilość dobrych odpowiedzi
     int z;          //ilość złych odpowiedzi
+
+   double Podsumowanie (staty score) ;      //double tylko na potrzeby testów bo nie miałem lepszego pomysłu
 };
 
-void Podsumowanie (staty score);
+
 
 #endif

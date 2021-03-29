@@ -1,24 +1,24 @@
 #include "LZespolona.hh"
-#include <cmath>
+#include <math.h>
 
-#define MIN_DIFF 0.00001
+#define MIN_DIFF 0.01
 
 //funkcja wyświetlająca liczbę zespoloną
-void Wyswietl1(LZespolona Skl1) {
+void LZespolona::Wyswietl1(LZespolona Skl1) const{
 
-cout<<"("<<Skl1.re<<showpos<<Skl1.im<<noshowpos<<"i"<<")";
+cout<<"("<<this->re<<showpos<<this->im<<noshowpos<<"i"<<")";
 }
 
 
 /* operator do obsługi wyświetlania*/
 ostream&operator << (ostream&StrmWy, LZespolona LiczbaWy) {
-
-  return StrmWy << "(" << LiczbaWy.re << showpos << LiczbaWy.im<< noshowpos << "i"<<')';
+  StrmWy.precision(2);
+  return StrmWy << "(" << std::fixed << LiczbaWy.re << std::showpos << LiczbaWy.im<< std::noshowpos << "i"<<')';
 }
 
 /*operator do wczytywania, pochodzi z materiałów zaprezentowanych 
 na zajęciach*/
-istream& operator >> (istream&StrmWej, LZespolona&LiczbaWe) {
+istream& operator >> (istream&StrmWej, LZespolona&LiczbaWe)  {
 
   char Nawias, Litera;
   StrmWej >> Nawias;
@@ -64,18 +64,17 @@ istream& operator >> (istream&StrmWej, LZespolona&LiczbaWe) {
  *    True dla równych liczb zespolonych.
  */
 
-bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
-  if ((Skl1.re == Skl2.re) && (Skl1.im == Skl2.im))
+bool  LZespolona::operator == (LZespolona  Skl2) const {
+  //if ((Skl1.re == Skl2.re) && (Skl1.im == Skl2.im))
+  //  return true;
+  //else
+  //  return false;
+  //alternatywnie, dla MIN_DIFF i wyników od użytkownika
+  
+  if (abs(this->re - Skl2.re) <= MIN_DIFF && abs(this->im - Skl2.im) <= MIN_DIFF)
     return true;
   else
     return false;
-  //alternatywnie, dla MIN_DIFF i wyników od użytkownika
-  
- // if abs(Skl1.re - Skl2.re) <= MIN_DIFF && abs(Skl1.im - Skl2.im) <= MIN_DIFF
- //   return true;
- // else
- //   return false;
-  
 }
 
 /*!
@@ -86,11 +85,11 @@ bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
  * Zwraca:
  *    Sume dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
+LZespolona  LZespolona::operator + (LZespolona  Skl2) const {
   LZespolona  Wynik;
 
-  Wynik.re = Skl1.re + Skl2.re;
-  Wynik.im = Skl1.im + Skl2.im;
+  Wynik.re = Skl2.re + this->re;
+  Wynik.im = Skl2.im + this->im;
   return Wynik;
 }
 
@@ -103,12 +102,12 @@ LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
  * Zwraca:
  *    roznice dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2)
+LZespolona  LZespolona::operator - ( LZespolona Skl2) const
 {
-  LZespolona  Wynik;
+  LZespolona Wynik;
 
-  Wynik.re = Skl1.re - Skl2.re;
-  Wynik.im = Skl1.im - Skl2.im;
+  Wynik.re = this->re - Skl2.re;
+  Wynik.im = this->im - Skl2.im;
   return Wynik;
 }
 
@@ -122,11 +121,14 @@ LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2)
  * Zwraca:
  *    Wynik dzielenia dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
+LZespolona  LZespolona::operator / (  double  Skl2) const{
+  if (Skl2==0) {
+    throw std::runtime_error("proba dzielenia przez zero");
+  }
   LZespolona  Wynik;
 
-  Wynik.re = Skl1.re / Skl2;
-  Wynik.im = Skl1.im / Skl2;
+  Wynik.re = this->re / Skl2;
+  Wynik.im = this->im / Skl2;
   return Wynik;
 }
 
@@ -139,12 +141,12 @@ LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
  * Zwraca:
  *    iloczyn dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2)
+LZespolona  LZespolona::operator * (  LZespolona  Skl2) const
 {
   LZespolona  Wynik;
 
-  Wynik.re = Skl1.re * Skl2.re - Skl1.im * Skl2.im;
-  Wynik.im = Skl1.re * Skl2.im + Skl2.re * Skl1.im;
+  Wynik.re = this->re * Skl2.re - this->im * Skl2.im;
+  Wynik.im = this->re * Skl2.im + Skl2.re * this->im;
   return Wynik;
 }
 
@@ -156,23 +158,25 @@ LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2)
  * Zwraca:
  *    iloraz dwoch skladnikow przekazanych jako parametry.
  */
-LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
-{
+LZespolona  LZespolona::operator / ( LZespolona  Skl2) const {
+
+  if (Skl2.re==0 && Skl2.im==0) {
+    throw std::runtime_error("Proba dzielenia przez zero");
+  }
   LZespolona  Wynik;
-  double modul;
-  modul = Modulkwadrat(Skl2);
-  Skl2 = Sprzezenie(Skl2);
+  
+  Skl2.Sprzezenie(Skl2);
 
   if(Skl2.im!=0) {                  //czyli jeśli dzielnik nie jest skalarem
     
-    Wynik.re = ((Skl1.re * Skl2.re) - (Skl1.im * Skl2.im))/modul;
-    Wynik.im = (Skl1.re * Skl2.im + Skl2.re * Skl1.im)/modul;
+    Wynik.re = ((this->re * Skl2.re) - (this->im * Skl2.im))/Skl2.Modulkwadrat(Skl2);
+    Wynik.im = (this->re * Skl2.im + Skl2.re * this->im)/Skl2.Modulkwadrat(Skl2);
     return Wynik;
     
   }
   else {              //kiedy dzielnik jest skalarem
-  Wynik.re = Skl1.re / Skl2.re;
-  Wynik.im = Skl1.im / Skl2.re;
+  Wynik.re = this->re / Skl2.re;
+  Wynik.im = this->im / Skl2.re;
   return Wynik;
   }
 }
@@ -186,13 +190,10 @@ LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
  * Zwraca:
  *    sprzezenie do podanej liczby zespolonej
  */
-LZespolona  Sprzezenie (LZespolona  Skl2)
+LZespolona  LZespolona::Sprzezenie (LZespolona  &Skl2) 
 {
-  LZespolona  Wynik;
-
-  Wynik.re = Skl2.re;
-  Wynik.im = (-1 * Skl2.im);
-  return Wynik;
+  this->im = (-1 * this->im);
+  return Skl2;
 }
 
 /*!
@@ -203,11 +204,56 @@ LZespolona  Sprzezenie (LZespolona  Skl2)
  * Zwraca:
  *    wartość kwadratu modulu liczby zespolonej.
  */
-double Modulkwadrat (LZespolona  Skl2)
+double LZespolona::Modulkwadrat (LZespolona  Skl2) const
 {
   double Wynik;
 
-  Wynik = sqrt(pow(Skl2.re, 2) + pow(Skl2.im,2));
+  Wynik = pow(this->re, 2) + pow(this->im,2);
   
   return Wynik;
 }
+
+LZespolona operator += (LZespolona &Skl1, LZespolona const &Skl2) {
+  Skl1=Skl1+Skl2;
+
+return Skl1;
+}
+
+LZespolona operator /= (LZespolona &Skl1, LZespolona const &Skl2) {
+  
+  Skl1=Skl1/Skl2;
+
+  return Skl1;
+}
+
+ double LZespolona::arg(LZespolona z)const {
+   double fi;
+   int q=2;
+   if (this->re == 0) {
+     if(this->im > 0) {
+       fi=M_PI/2;
+     }
+     else if(this->im < 0) {
+       fi=-M_PI/2;
+     }
+     else {
+       throw std::runtime_error("argument jest nieokreślony");
+       }
+   }
+   else  {
+     if (this->re > 0) {
+       fi=atan2(this->im, this->re);
+     }
+    if (this->re < 0) {
+      fi=atan2(this->im, this->re) + M_PI;
+    }
+   }
+   cout << fi;
+   double x=fi*pow(10,q);
+   if ( x - floor(x) < 0.5 )
+        x = floor(x);
+    else
+        x = floor(fi)+1;
+   return x/pow(10,q);
+        
+ }

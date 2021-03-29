@@ -19,30 +19,34 @@ using namespace std;
 struct  LZespolona {
   double   re;    /*! Pole repezentuje czesc rzeczywista. */
   double   im;    /*! Pole repezentuje czesc urojona. */
+
+  LZespolona  Sprzezenie (LZespolona  &Skl2) ;
+
+  double Modulkwadrat (LZespolona  Skl2) const ;
+
+  LZespolona operator + (  LZespolona  Skl2)const;
+
+  LZespolona operator - ( LZespolona  Skl2)const;
+
+  LZespolona operator / (double Skl2)const;
+
+  LZespolona  operator * ( LZespolona  Skl2)const;
+
+  LZespolona  operator / (  LZespolona  Skl2)const;
+
+  bool  operator == ( LZespolona  Skl2)const;
+
+  void Wyswietl1(LZespolona Skl1)const;
+
+  friend istream& operator >> (istream&StrmWej, LZespolona&LiczbaWe);
+
+  friend ostream & operator << (ostream&StrmWy, LZespolona LiczbaWy);
+
+  friend LZespolona operator += (LZespolona &Skl1, LZespolona const &Skl2);
+
+  friend LZespolona operator /= (LZespolona &Skl1, LZespolona const &Skl2);
+
+  double arg(LZespolona z)const;
 };
-
-void Wyswietl1(LZespolona Skl1);    
-/*
- * Dalej powinny pojawic sie zapowiedzi definicji przeciazen operatorow
- */
-ostream & operator << (ostream&StrmWy, LZespolona LiczbaWy);
-
-istream& operator >> (istream&StrmWej, LZespolona&LiczbaWe);
-
-bool  operator == (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona operator / (LZespolona Skl1, double Skl2);
-
-LZespolona  operator - (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2);
-
-LZespolona  Sprzezenie (LZespolona  Skl2);
-
-double Modulkwadrat (LZespolona  Skl2);
 
 #endif

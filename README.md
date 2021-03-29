@@ -1,5 +1,13 @@
 # Projekt 2 - Arytmetyka liczb zespolonych
 
+##informacje dla sprawdzającego
+1.w celu łatwiejszego sprawdzania usunąć znak komentarza (//) w funkcji main w 53 lini
+2.test wczytywania i wyświetlania liczby zespolonej jest dość "naciągany", jednak po normalnym odpaleniu programu wszystko działa poprawnie.
+3.w metodzie arg w części zaokrąglania posiłkowałem się informacjami z internetu, użyty sposób nie zawsze działa czego przykładem jest jeden z testów
+4.I całkiem ogólnie mówiąc nie jestem pewien poprawności napisanych testów, dążyłem dotegoaby wszystkie były "zielone".
+5 testy odpalamy za pomocą "make test", chociaż to pewnie nie muszę nawet mówić...
+6.Pozdrawiam i życzę wesołych świąt(jeśli ocenia to Pan przed nimi)
+
 ## Cel ćwiczenia
 Wykształcenie umiejętności definiowania przeciążeń operatorów arytmetycznych dwuargumentowych i jednoargumentowych dla własnych struktur danych oraz operatora porównania. Przećwiczenie podstawowych operacji na strumieniach plikowych.  Nabycie umiejętności definiowania przeciążeń operacji na strumieniach.
 
